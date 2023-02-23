@@ -37,35 +37,27 @@ const columnHelper = createColumnHelper();
 
 const columns = [
     columnHelper.accessor("firstName", {
+        header: "First Name",
         cell: (info) => (
             <span className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {info.getValue()}
             </span>
         ),
-        footer: (info) => info.column.id,
     }),
     columnHelper.accessor((row) => row.lastName, {
-        id: "lastName",
-        cell: (info) => info.getValue(),
-        header: () => <span>Last Name</span>,
-        footer: (info) => info.column.id,
+        header: "Last Name",
     }),
     columnHelper.accessor("age", {
-        header: () => "Age",
-        cell: (info) => info.renderValue(),
-        footer: (info) => info.column.id,
+        header: "Age",
     }),
     columnHelper.accessor("visits", {
-        header: () => <span>Visits</span>,
-        footer: (info) => info.column.id,
+        header: "Visits",
     }),
     columnHelper.accessor("status", {
         header: "Status",
-        footer: (info) => info.column.id,
     }),
     columnHelper.accessor("progress", {
         header: "Profile Progress",
-        footer: (info) => info.column.id,
     }),
 ];
 
