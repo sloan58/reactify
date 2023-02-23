@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import { Sanctum } from "react-sanctum";
+import apiClient from "./utils/apiClient.js";
 
 const sanctumConfig = {
     apiUrl: "http://localhost:8000",
@@ -10,6 +11,7 @@ const sanctumConfig = {
     signInRoute: "login",
     signOutRoute: "logout",
     userObjectRoute: "api/user",
+    axiosInstance: apiClient,
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(

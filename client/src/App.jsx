@@ -19,7 +19,11 @@ function App() {
     ]);
 
     const { authenticated } = useSanctum();
-    return <RouterProvider router={authenticated ? authRouter : guestRouter} />;
+    return authenticated == null ? (
+        ""
+    ) : (
+        <RouterProvider router={authenticated ? authRouter : guestRouter} />
+    );
 }
 
 export default App;

@@ -1,4 +1,14 @@
+import { useEffect, useState } from "react";
+import apiClient from "../utils/apiClient.js";
+
 const Table = () => {
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        apiClient
+            .get("/api/users")
+            .then((users) => setUsers(users.data))
+            .catch((err) => console.error(err));
+    }, []);
     return (
         <div className="relative overflow-x-auto border-2 p-4 rounded">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
