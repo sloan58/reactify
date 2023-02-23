@@ -1,9 +1,12 @@
 import AuthLayout from "../layout/AuthLayout.jsx";
+import Table from "../components/Table.jsx";
 
 const Dashboard = () => {
     return (
         <AuthLayout>
-            <div>Dashboard</div>
+            <div className="w-2/3 mx-auto">
+                <Table />
+            </div>
         </AuthLayout>
     );
 };
