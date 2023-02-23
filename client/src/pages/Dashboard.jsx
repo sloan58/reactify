@@ -1,17 +1,10 @@
-import { useSanctum } from "react-sanctum";
+import AuthLayout from "../layout/AuthLayout.jsx";
 
 const Dashboard = () => {
-    const { signOut } = useSanctum();
-    const handleLogout = () => {
-        signOut()
-            .then((res) => console.log(res))
-            .catch((err) => console.error(err));
-    };
     return (
-        <div>
+        <AuthLayout>
             <div>Dashboard</div>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
+        </AuthLayout>
     );
 };
 
