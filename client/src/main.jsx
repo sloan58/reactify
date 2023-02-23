@@ -1,8 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
-import {BrowserRouter} from "react-router-dom";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
 import { Sanctum } from "react-sanctum";
 
 const sanctumConfig = {
@@ -13,12 +12,10 @@ const sanctumConfig = {
     userObjectRoute: "api/user",
 };
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-      <BrowserRouter>
-          <Sanctum config={sanctumConfig}>
+ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
+        <Sanctum config={sanctumConfig}>
             <App />
-          </Sanctum>
-      </BrowserRouter>
-  </React.StrictMode>,
-)
+        </Sanctum>
+    </React.StrictMode>
+);
