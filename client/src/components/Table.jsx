@@ -8,8 +8,8 @@ import Paginator from "./Paginator.jsx";
 import { useEffect, useMemo, useState } from "react";
 import apiClient from "../utils/apiClient.js";
 
-function Table({source}) {
-    
+function Table() {
+
     const columnHelper = createColumnHelper();
 
     const columns = [
@@ -35,8 +35,9 @@ function Table({source}) {
 
     useEffect(() => {
         apiClient
-            .get(`${source}?page=${pageIndex + 1}&pageSize=${pageSize}`)
+            .get(`/api/users?page=${pageIndex + 1}&pageSize=${pageSize}`)
             .then((res) => {
+                console.log(res.data)
                 setData(res.data);
             });
     }, [pageIndex, pageSize]);
@@ -101,7 +102,7 @@ function Table({source}) {
                     ))}
                 </tbody>
             </table>
-            <Paginator table={table} pagination={pagination} />
+            <Paginator table={table} pagination={pagination} totalCount={data.total} />
         </div>
     );
 }

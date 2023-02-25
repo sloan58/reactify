@@ -1,6 +1,70 @@
-const Paginator = ({ table, pagination }) => {
+import { usePagination, DOTS } from "../hooks/usePagination.jsx";
+
+const Paginator = ({ table, pagination, totalCount }) => {
+    const paginationRange = usePagination({
+        totalCount,
+        pageSize: 10,
+        siblingCount: 3,
+        currentPage: 1,
+    });
+
     return (
-        <>
+        <div className="mt-8">
+            <nav aria-label="Page navigation example">
+                <ul className="inline-flex -space-x-px">
+                    <li>
+                        <a
+                            href="#"
+                            className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}
+                        >
+                            Previous
+                        </a>
+                    </li>
+                    {paginationRange && paginationRange.map((pageNumber) => {
+                        // If the pageItem is a DOT, render the DOTS unicode character
+                        if (pageNumber === DOTS) {
+                            return (
+                                <li key={pageNumber + 0}>
+                                    <a
+                                        href="#"
+                                        className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    >
+                                        &#8230;
+                                    </a>
+                                </li>
+                            );
+                        }
+
+                        // Render our Page Pills
+                        return (
+                            <li key={pageNumber + 0}>
+                                <a
+                                    href="#"
+                                    className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    onClick={() =>
+                                        table.setPageIndex(pageNumber - 1)
+                                    }
+                                >
+                                    {pageNumber}
+                                </a>
+                            </li>
+                        );
+                    })}
+                    <li>
+                        <a
+                            href="#"
+                            className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            onClick={() => table.nextPage()}
+                            disabled={!table.getCanNextPage()}
+                        >
+                            Next
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
             <div className="h-2" />
             <div className="flex items-center gap-2">
                 <button
@@ -67,7 +131,7 @@ const Paginator = ({ table, pagination }) => {
             </div>
             <div>{table.getRowModel().rows.length} Rows</div>
             <pre>{JSON.stringify(pagination, null, 2)}</pre>
-        </>
+        </div>
     );
 };
 

@@ -5,7 +5,7 @@ const Dashboard = () => {
     return (
         <AuthLayout>
             <div className="w-2/3 mx-auto">
-                <Table source="/api/users" />
+                <Table />
             </div>
         </AuthLayout>
     );
