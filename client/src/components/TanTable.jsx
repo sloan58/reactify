@@ -4,65 +4,31 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { useReducer, useState } from "react";
-
-const defaultData = [
-    {
-        firstName: "tanner",
-        lastName: "linsley",
-        age: 24,
-        visits: 100,
-        status: "In Relationship",
-        progress: 50,
-    },
-    {
-        firstName: "tandy",
-        lastName: "miller",
-        age: 40,
-        visits: 40,
-        status: "Single",
-        progress: 80,
-    },
-    {
-        firstName: "joe",
-        lastName: "dirte",
-        age: 45,
-        visits: 20,
-        status: "Complicated",
-        progress: 10,
-    },
-];
+import { useEffect, useState } from "react";
+import apiClient from "../utils/apiClient.js";
 
 const columnHelper = createColumnHelper();
 
 const columns = [
-    columnHelper.accessor("firstName", {
-        header: "First Name",
+    columnHelper.accessor("name", {
+        header: "Name",
         cell: (info) => (
             <span className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {info.getValue()}
             </span>
         ),
     }),
-    columnHelper.accessor((row) => row.lastName, {
-        header: "Last Name",
-    }),
-    columnHelper.accessor("age", {
-        header: "Age",
-    }),
-    columnHelper.accessor("visits", {
-        header: "Visits",
-    }),
-    columnHelper.accessor("status", {
-        header: "Status",
-    }),
-    columnHelper.accessor("progress", {
-        header: "Profile Progress",
+    columnHelper.accessor((row) => row.email, {
+        header: "Email",
     }),
 ];
 
 function TanTable() {
-    const [data, setData] = useState(() => [...defaultData]);
+    const [data, setData] = useState(() => []);
+
+    useEffect(() => {
+        apiClient.get('/api/users').then(({data}) => setData(data.data))
+    }, [])
 
     const table = useReactTable({
         data,

@@ -7,7 +7,6 @@ const Dashboard = () => {
         <AuthLayout>
             <div className="w-2/3 mx-auto">
                 <TanTable />
-                <Table />
             </div>
         </AuthLayout>
     );
