@@ -5,8 +5,8 @@ const Paginator = ({ table, totalCount, totalPageCount }) => {
         totalPageCount,
         totalCount,
         pageSize: 10,
-        siblingCount: 0,
-        currentPage: 1,
+        siblingCount: 3,
+        currentPage: table.getState().pagination.pageIndex + 1,
     });
 
     return (
