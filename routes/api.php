@@ -20,7 +20,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::get('/users', function(Request $request) {
-        return \App\Models\User::paginate();
+        return \App\Models\User::paginate($request->get('pageSize') ?? 10);
     });
 
     Route::get('/dashboard', function () {
