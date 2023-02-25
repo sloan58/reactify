@@ -9,7 +9,6 @@ import { useEffect, useMemo, useState } from "react";
 import apiClient from "../utils/apiClient.js";
 
 function Table() {
-
     const columnHelper = createColumnHelper();
 
     const columns = [
@@ -17,8 +16,8 @@ function Table() {
             header: "Name",
             cell: (info) => (
                 <span className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {info.getValue()}
-            </span>
+                    {info.getValue()}
+                </span>
             ),
         }),
         columnHelper.accessor((row) => row.email, {
@@ -37,7 +36,6 @@ function Table() {
         apiClient
             .get(`/api/users?page=${pageIndex + 1}&pageSize=${pageSize}`)
             .then((res) => {
-                console.log(res.data)
                 setData(res.data);
             });
     }, [pageIndex, pageSize]);
@@ -102,7 +100,12 @@ function Table() {
                     ))}
                 </tbody>
             </table>
-            <Paginator table={table} pagination={pagination} totalCount={data.total} />
+            <Paginator
+                table={table}
+                pagination={pagination}
+                totalCount={data.total}
+                totalPageCount={data.last_page}
+            />
         </div>
     );
 }

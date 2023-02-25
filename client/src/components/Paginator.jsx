@@ -1,10 +1,11 @@
 import { usePagination, DOTS } from "../hooks/usePagination.jsx";
 
-const Paginator = ({ table, pagination, totalCount }) => {
+const Paginator = ({ table, totalCount, totalPageCount }) => {
     const paginationRange = usePagination({
+        totalPageCount,
         totalCount,
         pageSize: 10,
-        siblingCount: 3,
+        siblingCount: 0,
         currentPage: 1,
     });
 
@@ -13,54 +14,64 @@ const Paginator = ({ table, pagination, totalCount }) => {
             <nav aria-label="Page navigation example">
                 <ul className="inline-flex -space-x-px">
                     <li>
-                        <a
-                            href="#"
-                            className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        <button
+                            className={`px-3 py-2 ml-0 leading-tight text-gray-500 border border-gray-300 rounded-l-lg ${
+                                table.getCanPreviousPage()
+                                    ? "bg-white dark:bg-gray-800"
+                                    : "bg-gray-100 hover:text-gray-700"
+                            } hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
                             onClick={() => table.previousPage()}
                             disabled={!table.getCanPreviousPage()}
                         >
                             Previous
-                        </a>
+                        </button>
                     </li>
-                    {paginationRange && paginationRange.map((pageNumber) => {
-                        // If the pageItem is a DOT, render the DOTS unicode character
-                        if (pageNumber === DOTS) {
+                    {paginationRange &&
+                        paginationRange.map((pageNumber) => {
+                            // If the pageItem is a DOT, render the DOTS unicode character
+                            if (pageNumber === DOTS) {
+                                return (
+                                    <li key={pageNumber + 0}>
+                                        <button className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            &#8230;
+                                        </button>
+                                    </li>
+                                );
+                            }
+
+                            // Render our Page Pills
                             return (
                                 <li key={pageNumber + 0}>
-                                    <a
-                                        href="#"
-                                        className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    <button
+                                        className={`px-3 py-2 leading-tight text-gray-500 border border-gray-300 ${
+                                            table.getState().pagination
+                                                .pageIndex +
+                                                1 !==
+                                            pageNumber
+                                                ? "bg-white dark:bg-gray-800 hover:bg-gray-100 hover:text-gray-700"
+                                                : "bg-blue-200 font-bold"
+                                        } dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                                        onClick={() =>
+                                            table.setPageIndex(pageNumber - 1)
+                                        }
                                     >
-                                        &#8230;
-                                    </a>
+                                        {pageNumber}
+                                    </button>
                                 </li>
                             );
-                        }
-
-                        // Render our Page Pills
-                        return (
-                            <li key={pageNumber + 0}>
-                                <a
-                                    href="#"
-                                    className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                    onClick={() =>
-                                        table.setPageIndex(pageNumber - 1)
-                                    }
-                                >
-                                    {pageNumber}
-                                </a>
-                            </li>
-                        );
-                    })}
+                        })}
                     <li>
-                        <a
-                            href="#"
-                            className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        <button
+                            className={`px-3 py-2 ml-0 leading-tight text-gray-500 border border-gray-300 rounded-r-lg ${
+                                table.getCanNextPage()
+                                    ? "bg-white dark:bg-gray-800"
+                                    : "bg-gray-100 hover:text-gray-700"
+                            } hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
                             onClick={() => table.nextPage()}
                             disabled={!table.getCanNextPage()}
                         >
                             Next
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </nav>
@@ -130,7 +141,6 @@ const Paginator = ({ table, pagination, totalCount }) => {
                 </select>
             </div>
             <div>{table.getRowModel().rows.length} Rows</div>
-            <pre>{JSON.stringify(pagination, null, 2)}</pre>
         </div>
     );
 };
